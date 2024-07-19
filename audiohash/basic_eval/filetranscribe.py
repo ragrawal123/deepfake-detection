@@ -4,7 +4,7 @@ import sys
 import os
 
 
-def transcribe(file):
+def file_transcribe(file):
     normalize = EnglishTextNormalizer()
     model = whisper.load_model("base.en").to('cuda')
     audio = whisper.load_audio(file)
