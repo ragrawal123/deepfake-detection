@@ -6,7 +6,7 @@ import torch
 def main(): 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     ds = load_dataset("librispeech_asr", "all", split="test.clean", streaming=True)
-    
+    print(ds) 
     #Debugging Purposes
     ds = ds.take(512)
 
