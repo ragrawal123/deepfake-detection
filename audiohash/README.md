@@ -3,6 +3,6 @@ We are evaluating [OpenAI's whisper](https://github.com/openai/whisper/tree/main
 
 ## Setup
 
-## Datasets
+## Dataset
 
 ## Evaluation
