@@ -21,10 +21,22 @@ def main():
     references = []
 
     noise = 'noisy_data.txt'
+    check = 'checked_data.txt'
+    
     if os.path.exists(noise):
         os.remove(noise)
     noisy_data = open(noise, 'a')
-    checked_data = open('checked_data.txt', 'a')
+    
+    if os.path.exists(check):
+        checked_data = dict()
+        with open(check) as file:
+        for line in file:
+            line = line.strip('\n')
+            id, pred = line.split(':')
+            checked_data[id] = pred
+    else:
+        checked_data = open(check, 'a')
+    
     gigaspeech_garbage_utterance_tags = ['<SIL>', '<NOISE>', '<MUSIC>', '<OTHER>']
     
     for (counter, file) in enumerate(json_files):
