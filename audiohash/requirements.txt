@@ -1,0 +1,7 @@
+datasets
+faster-whisper
+evaluate
+torch
+scipy
+whisper_normalizer
+jiwer
