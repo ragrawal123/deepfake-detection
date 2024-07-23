@@ -2,7 +2,7 @@ from datasets import load_dataset
 from faster_whisper import WhisperModel
 import evaluate
 import torch
-from scipy.io.wavfile import write
+import scipy.io.wavfile as wav
 import os
 from whisper_normalizer.english import EnglishTextNormalizer
 import codecs, json
@@ -13,8 +13,10 @@ def main():
     sample_rate = 16000
     #Data contains data['source'] to grab source of audio, if source==2 --> Youtube
     youtube = 2
-
+    json_dir = '/media/raunak/1TB/data_entries/'
+    wav_dir = '/media/raunak/1TB/yt_wav_files/'
     #Requires Hugging Face account & token due to being a gated dataset
+    #Grabbing 3845 transcribed hours of YouTube data out of the xl training subset
     gigaspeech_train = load_dataset("speechcolab/gigaspeech", "xl", split="train", streaming=True, token="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")
 
     model = WhisperModel("medium.en", device=device, compute_type="float16")
@@ -22,28 +24,27 @@ def main():
     normalize = EnglishTextNormalizer()
 
     #Debugging Purposes
-    gigaspeech_train = gigaspeech_train.take(50)
+    #gigaspeech_train = gigaspeech_train.take(10)
 
-    if not os.path.isdir('yt_wav_files/'):
-        os.makedirs('yt_wav_files/')
-    if not os.path.isdir('data_entries/'):
-        os.makedirs('data_entries/')
+    if not os.path.isdir(wav_dir):
+        os.makedirs(wav_dir)
+    if not os.path.isdir(json_dir):
+        os.makedirs(json_dir)
 
-    #data["text"] for transcription
-    #data["segment_id"] or data["audio_id"]
-    #data["audio"]["path"] for audio file to be transcribed
+    i = 0
     for data in gigaspeech_train:
         if data['source'] == youtube:
             file = os.path.basename(data['audio']['path'])
-            json_file = f"data_entries/{data['segment_id']}.json"
-            write(f"yt_wav_files/{file}", sample_rate, data['audio']['array'])
-            data['audio']['array'] = data['audio']['array'].tolist()
-            data['audio']['path'] = f"yt_wav_files/{file}"
+            json_file = f"{json_dir}{data['segment_id']}.json"
+            wav.write(f"{wav_dir}{file}", sample_rate, data['audio']['array'])
+            data['audio']['array'] = data['audio']['array'].tolist().clear()
+            data['audio']['path'] = f"{wav_dir}{file}"
             json.dump(data, codecs.open(json_file, 'w', encoding='utf-8'), 
             separators=(',', ':'), 
             sort_keys=True, 
             indent=4)
-
+            print(f"{i}: {data['segment_id']}.json created")
+            i = i + 1
 
     # for data in ds:
     #         print(data)
