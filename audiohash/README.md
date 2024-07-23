@@ -34,9 +34,15 @@ In order to download the data, we ran:
 
 ## Evaluation
 To evaluate the YouTube data, we wrote the script `wer_eval.py` using [faster-whisper](https://github.com/SYSTRAN/faster-whisper), which outputs:
-- Number of audio segment transcribed, possibly labeled with 'Noise', meaning that the audio segment fell under the `gigaspeech_garbage_utterance_tags` and was skipped over in transcription
+- Number of audio segment transcribed, possibly labeled with:
+  
+  "#:Noise", meaning that the audio segment fell under the `gigaspeech_garbage_utterance_tags` and was skipped over in transcription
+
+  "#:Checked", meaning the audio segment was already transcribed in a previous script run and was saved into a file and loaded into a dict during runtime for easy access to the prediction rather than re-transcribing
+  
 - The WER metric % at the end of runtime
-- Two text files:\
+- Two text files:
+  
    'noisy_data.txt': contains the file_id of the segments that were under the `gigaspeech_garbage_utterance_tags`
   
     'checked_data.txt': contains the file_id of all segments transcribed
