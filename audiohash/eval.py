@@ -20,7 +20,7 @@ def main():
     predictions = []
     references = []
     checked_data_dict = dict()
-    
+
     noise = 'noisy_data.txt'
     check = 'checked_data.txt'
     
