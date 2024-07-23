@@ -1,7 +1,7 @@
 # Evaluating OpenAI's Whisper for Robustness with a In-The-Wild Dataset
 We are evaluating [OpenAI's whisper](https://github.com/openai/whisper/tree/main?tab=readme-ov-file) under a in-the-wild dataset using the WER metric to understand its robustness. The aim is to see if Whisper can be used as an additional feature to Mobile X Lab's VeriLight system by focusing on hashing live speech transcriptions as an additional form of verification to VeriLight's visual detection system.
 
-[Basic Eval](./basic_eval) contains a script to do a smaller, basic evaluation using OpenAI's whisper 'base' model under the [OpenSLR LibriSpeech](https://huggingface.co/datasets/openslr/librispeech_asr) clean subset.
+[basic_eval](./basic_eval) contains a script to do a smaller, basic evaluation using OpenAI's whisper 'base' model under the [OpenSLR LibriSpeech](https://huggingface.co/datasets/openslr/librispeech_asr) clean subset.
 ## Setup
 Create a conda environment with Python 3.9:
 
