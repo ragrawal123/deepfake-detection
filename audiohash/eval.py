@@ -19,7 +19,8 @@ def main():
     json_files = os.scandir(json_dir)
     predictions = []
     references = []
-
+    checked_data_dict = dict()
+    
     noise = 'noisy_data.txt'
     check = 'checked_data.txt'
     
@@ -28,14 +29,13 @@ def main():
     noisy_data = open(noise, 'a')
     
     if os.path.exists(check):
-        checked_data = dict()
         with open(check) as file:
-        for line in file:
-            line = line.strip('\n')
-            id, pred = line.split(':')
-            checked_data[id] = pred
-    else:
-        checked_data = open(check, 'a')
+            for line in file:
+                line = line.strip('\n')
+                id, pred = line.split(':')
+                checked_data_dict[id] = pred
+
+    checked_data = open(check, 'a')
     
     gigaspeech_garbage_utterance_tags = ['<SIL>', '<NOISE>', '<MUSIC>', '<OTHER>']
     
@@ -47,6 +47,12 @@ def main():
         if data['text'] in gigaspeech_garbage_utterance_tags:
             noisy_data.write(f"{file_id}\n")
             print(f"{counter}:Noise")
+            continue
+        
+        if file_id in checked_data_dict.keys():
+            predictions.append(checked_data_dict[file_id])
+            references.append(normalize(data['text']))
+            print(f"{counter}:Checked")
             continue
         
         segments, _ = model.transcribe(f"{wav_dir}{file_id}.wav", beam_size=5)
