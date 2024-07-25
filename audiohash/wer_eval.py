@@ -6,9 +6,6 @@ import os
 import codecs, json
 
 def main():
-    #Setup and Load Models/Data
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
-
     #Data contains data['source'] to grab source of audio, if source==2 --> Youtube
     youtube = 2
 
@@ -33,6 +30,11 @@ def main():
         if data['source'] == youtube:
             file = os.path.basename(data['audio']['path'])
             json_file = f"{json_dir}{data['segment_id']}.json"
+            #Should add a check to see if data already in data_entries/
+            #And if wav file already in yt_wav_files/
+            if os.path.exists(f"{json_file}"):
+                print(f"{i}: Already Created")
+                continue
             wav.write(f"{wav_dir}{file}", sample_rate, data['audio']['array'])
             data['audio']['array'] = data['audio']['array'].tolist().clear()
             data['audio']['path'] = f"{wav_dir}{file}"

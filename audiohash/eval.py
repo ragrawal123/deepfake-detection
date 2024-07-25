@@ -7,7 +7,7 @@ import json
 
 
 def main():
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = 'cuda:1' if torch.cuda.is_available() else 'cpu'
     print('Using:', device)
     json_dir = '/media/raunak/1TB/data_entries/'
     wav_dir = '/media/raunak/1TB/yt_wav_files/'
