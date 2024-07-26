@@ -26,7 +26,7 @@ We chose the YouTube subset because of the various acoustic descriptions:
 <!-- end of list -->
 And, a variety of YouTube videos tend to inherently be recorded at different angles.\
 \
-In order to use the YouTube subset, we wrote the script `dataload.py` that would download the audio segments locally, taking [GB] space. This is due to the dataset being gated on Hugging Face and requiring an HF account & token to use, which provides an unnecessary barrier.
+In order to use the YouTube subset, we wrote the script `dataload.py` that would download the audio segments locally, taking 461 GB. This is due to the dataset being gated on Hugging Face and requiring an HF account & token to use, which provides an unnecessary barrier.
 
 In order to download the data, we ran: 
 
