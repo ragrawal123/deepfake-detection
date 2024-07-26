@@ -26,7 +26,8 @@ def main():
         os.makedirs(json_dir)
 
     i = 0
-    for data in gigaspeech_train:
+    print(len(gigaspeech_train))
+    for (counter, data) in enumerate(gigaspeech_train):
         if data['source'] == youtube:
             file = os.path.basename(data['audio']['path'])
             json_file = f"{json_dir}{data['segment_id']}.json"
@@ -34,6 +35,7 @@ def main():
             #And if wav file already in yt_wav_files/
             if os.path.exists(f"{json_file}"):
                 print(f"{i}: Already Created")
+                i = i + 1
                 continue
             wav.write(f"{wav_dir}{file}", sample_rate, data['audio']['array'])
             data['audio']['array'] = data['audio']['array'].tolist().clear()

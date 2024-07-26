@@ -7,7 +7,7 @@ import json
 
 
 def main():
-    device = 'cuda:1' if torch.cuda.is_available() else 'cpu'
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print('Using:', device)
     json_dir = '/media/raunak/1TB/data_entries/'
     wav_dir = '/media/raunak/1TB/yt_wav_files/'
@@ -34,9 +34,10 @@ def main():
                 line = line.strip('\n')
                 id, pred = line.split(':')
                 checked_data_dict[id] = pred
-
+            file.close()
+            
     checked_data = open(check, 'a')
-    
+    print(len(checked_data_dict))
     gigaspeech_garbage_utterance_tags = ['<SIL>', '<NOISE>', '<MUSIC>', '<OTHER>']
     
     for (counter, file) in enumerate(json_files):
@@ -66,6 +67,8 @@ def main():
         references.append(normalize(data['text']))
         predictions.append(prediction)
         entry.close()
+        
+        
 
     noisy_data.close()
     checked_data.close()
