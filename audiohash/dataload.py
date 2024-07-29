@@ -10,8 +10,8 @@ def main():
     youtube = 2
 
     sample_rate = 16000
-    json_dir = '/media/raunak/1TB/data_entries/'
-    wav_dir = '/media/raunak/1TB/yt_wav_files/'
+    json_dir = '/media/storage/data_entries/'
+    wav_dir = '/media/storage/yt_wav_files/'
 
     #Requires Hugging Face account & token due to being a gated dataset
     #Grabbing xl training subset, aiming to download 3845 hours of YouTube data
@@ -26,14 +26,13 @@ def main():
         os.makedirs(json_dir)
 
     i = 0
-    print(len(gigaspeech_train))
-    for (counter, data) in enumerate(gigaspeech_train):
+    for data in gigaspeech_train:
         if data['source'] == youtube:
             file = os.path.basename(data['audio']['path'])
             json_file = f"{json_dir}{data['segment_id']}.json"
             #Should add a check to see if data already in data_entries/
             #And if wav file already in yt_wav_files/
-            if os.path.exists(f"{json_file}"):
+            if os.path.exists(f"{json_file}") and os.path.exists(f"{wav_dir}{file}"):
                 print(f"{i}: Already Created")
                 i = i + 1
                 continue

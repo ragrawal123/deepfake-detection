@@ -9,8 +9,9 @@ import json
 def main():
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
     print('Using:', device)
-    json_dir = '/media/raunak/1TB/data_entries/'
-    wav_dir = '/media/raunak/1TB/yt_wav_files/'
+    json_dir = '/media/storage/data_entries/'
+    wav_dir = '/media/storage/yt_wav_files/'
+    old_wav_dir = '/media/raunak/1TB/yt_wav_files/'
 
     model = WhisperModel("base.en", device=device, compute_type="float16")
     wer = evaluate.load("wer")
@@ -43,8 +44,11 @@ def main():
     for (counter, file) in enumerate(json_files):
         file_id = os.path.splitext(file.name)[0]
         entry = open(f"{json_dir}{file.name}")
-        data = json.load(entry)
-        
+        try:
+            data = json.load(entry)
+        except:
+            print(f"{counter}: Error evaluating: {file.name}")
+            continue
         if data['text'] in gigaspeech_garbage_utterance_tags:
             noisy_data.write(f"{file_id}\n")
             print(f"{counter}:Noise")
@@ -53,7 +57,7 @@ def main():
         if file_id in checked_data_dict.keys():
             predictions.append(checked_data_dict[file_id])
             references.append(normalize(data['text']))
-            print(f"{counter}:Checked")
+            print(f"{counter}: Checked: {file_id}")
             continue
         
         segments, _ = model.transcribe(f"{wav_dir}{file_id}.wav", beam_size=5)
@@ -62,7 +66,7 @@ def main():
             prediction += segment.text
         
         prediction = normalize(prediction)
-        print(f"{counter}")
+        print(f"{counter}: {file_id}")
         checked_data.write(f"{file_id}:{prediction}\n")
         references.append(normalize(data['text']))
         predictions.append(prediction)
