@@ -1,0 +1,13 @@
+torch==1.4.0
+av==6.2.0
+albumentations
+ffmpeg
+numpy
+opencv-python
+torchvision
+tqdm
+pandas
+tensorboardx==2.0
+efficientnet-pytorch
+scikit-learn
+matplotlib
