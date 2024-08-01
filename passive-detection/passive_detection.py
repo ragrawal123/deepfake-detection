@@ -35,7 +35,9 @@ def main():
     video_read_fn = lambda x: videoreader.read_frames(x, num_frames=frames_per_video) 
     face_extractor = FaceExtractor(video_read_fn=video_read_fn, facedet=facedet)
 
-
+    deepfakedir = './deepfakedir/'
+    if not os.path.exists(deepfakedir):
+        os.makedirs(deepfakedir)
     rootdir = '/media/raunak/E380-1E91/Deepfake/End_To_End/deepfakes_may24/'
     checked_dict = dict()
     i = 0
@@ -43,18 +45,18 @@ def main():
         if len(dirs) == 0:
             model = os.path.basename(os.path.dirname(root))
             
-            if os.path.exists(f"{model}.txt"):
-                with open(f"{model}.txt") as file:
+            if os.path.exists(f"{deepfakedir}{model}.txt"):
+                with open(f"{deepfakedir}{model}.txt") as file:
                     for line in file:
                         line.strip('\n')
                         id, data = line.split(':', 1)
                         checked_dict[id] = data
                     file.close()
 
-            model_file = open(f"{model}.txt", 'a')
+            model_file = open(f"{deepfakedir}{model}.txt", 'a')
             
             for file in os.listdir(root):
-                if file.endswith('.mp4'):
+                if file.endswith('.mp4') and file.startswith("p"):
                     path = f"{root}/{file}".split('/', 7)[7]
                     if path in checked_dict.keys():
                         print(f'{i}: {path}: Already in file')
