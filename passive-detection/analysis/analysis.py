@@ -33,8 +33,8 @@ def get_classification_scores(models, class_scores, auc_scores):
     
     score_txt = open(scorepath, 'a')
 
-    deepfakedir = '../deepfakedir/'
-    ogdir = '../ogdir/'
+    deepfakedir = '../data/deepfakedir/'
+    ogdir = '../data/ogdir/'
     threshold = 0.5 #Threshold for determining REAL(0) or FAKE(1)
 
     for model in models:

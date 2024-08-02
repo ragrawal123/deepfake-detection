@@ -9,9 +9,9 @@ from scipy.special import expit
 
 import sys
 sys.path.append('..')
-from blazeface import FaceExtractor, BlazeFace, VideoReader
-from architectures import fornet, weights
-from isplutils import utils
+from eval_utils.blazeface import FaceExtractor, BlazeFace, VideoReader
+from eval_utils.architectures import fornet, weights
+from eval_utils.isplutils import utils
 import time
 
 def main():
@@ -29,13 +29,13 @@ def main():
     transf = utils.get_transformer(face_policy, face_size, eval_model.get_normalizer(), train=False)
 
     facedet = BlazeFace().to(device)
-    facedet.load_weights("./blazeface/blazeface.pth")
-    facedet.load_anchors("./blazeface/anchors.npy")
+    facedet.load_weights("./eval_utils/blazeface/blazeface.pth")
+    facedet.load_anchors("./eval_utils/blazeface/anchors.npy")
     videoreader = VideoReader(verbose=False)
     video_read_fn = lambda x: videoreader.read_frames(x, num_frames=frames_per_video) 
     face_extractor = FaceExtractor(video_read_fn=video_read_fn, facedet=facedet)
 
-    deepfakedir = './deepfakedir/'
+    deepfakedir = './data/deepfakedir/'
     if not os.path.exists(deepfakedir):
         os.makedirs(deepfakedir)
     rootdir = '/media/raunak/E380-1E91/Deepfake/End_To_End/deepfakes_may24/'
