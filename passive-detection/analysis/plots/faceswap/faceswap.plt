@@ -25,8 +25,8 @@ set key maxrows 2
 set key width -4
 set key samplen 1
 
-out = "faceswap_plot.pdf"
-#out2 = "faceswap_plot.eps"
+out = "faceswap_roc.pdf"
+#out2 = "faceswap_roc.eps"
 set output out
 #set output out2
 

@@ -25,8 +25,8 @@ set key maxrows 2
 set key width -4
 set key samplen 1
 
-out = "talklip_plot.pdf"
-#out2 = "talklip_plot.eps"
+out = "talklip_roc.pdf"
+#out2 = "talklip_roc.eps"
 set output out
 #set output out2
 

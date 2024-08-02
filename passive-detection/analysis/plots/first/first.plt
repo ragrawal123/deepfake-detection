@@ -25,8 +25,8 @@ set key maxrows 2
 set key width -4
 set key samplen 1
 
-out = "first_plot.pdf"
-#out2 = "first_plot.eps"
+out = "first_roc.pdf"
+#out2 = "first_roc.eps"
 set output out
 #set output out2
 

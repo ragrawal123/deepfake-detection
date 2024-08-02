@@ -25,8 +25,8 @@ set key maxrows 2
 set key width -4
 set key samplen 1
 
-out = "sadtalker_plot.pdf"
-#out2 = "sadtalker_plot.eps"
+out = "sadtalker_roc.pdf"
+#out2 = "sadtalker_roc.eps"
 set output out
 #set output out2
 

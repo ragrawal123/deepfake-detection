@@ -25,8 +25,8 @@ set key maxrows 2
 set key width -4
 set key samplen 1
 
-out = "dagan_plot.pdf"
-#out2 = "dagan_plot.eps"
+out = "dagan_roc.pdf"
+#out2 = "dagan_roc.eps"
 set output out
 #set output out2
 
