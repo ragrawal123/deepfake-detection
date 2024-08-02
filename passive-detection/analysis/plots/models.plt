@@ -14,7 +14,7 @@ set xtics in
 set xlabel "False Positive Rate"
 
 set ytic format "%.2f"
-set yrange [0:1]
+set yrange [-0.05:1.05]
 set ytics 0.25
 set ytics in
 set ytics nomirror
