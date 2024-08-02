@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import balanced_accuracy_score, f1_score, precision_score, recall_score
-
+import os
+import pandas as pd
 
 def get_tpr_fpr(original_vid_scores, df_vid_scores, decision_thresh, print_results= False):
     """
@@ -63,7 +64,7 @@ def get_tpr_fpr(original_vid_scores, df_vid_scores, decision_thresh, print_resul
     return tpr, fpr
 
 
-def roc_curve(original_vid_scores, df_vid_scores):
+def roc_curve(original_vid_scores, df_vid_scores, model_name):
     """
     Plot ROC curve and compute AUC.
 
@@ -89,6 +90,15 @@ def roc_curve(original_vid_scores, df_vid_scores):
     fprs_order = np.argsort(fprs)
     fprs = fprs[fprs_order] #sort so integral has correct sign
     tprs = tprs[fprs_order]
+
+    csv_file = f"./plots/{model_name}rates.csv"
+    if os.path.exists(csv_file):
+        os.remove(csv_file)
+    
+    scores = {'fprs': fprs, 'tprs': tprs}
+    values = pd.DataFrame(scores)
+    values.to_csv(csv_file, index=False)
+
 
     auc = np.trapz(tprs, fprs)
     #print("AUC: ", auc)
