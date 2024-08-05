@@ -3,7 +3,6 @@ from collections import defaultdict
 import os
 
 def main():
-    models = ['dagan', 'faceswap', 'first', 'sadtalker', 'talklip']
     class_scores = defaultdict(list)
     auc_scores = defaultdict(list)
     class_scores, auc_scores = get_classification_scores(models=models, class_scores=class_scores, auc_scores=auc_scores)
@@ -19,6 +18,8 @@ def main():
     
     og_truths = [0 for i in range(len(class_scores['ogvid']))]
 
+    models = ['dagan', 'faceswap', 'first', 'sadtalker', 'talklip']
+    
     for model in models:
         truths = [1 for i in range(len(class_scores[model]))] + og_truths
         predictions = class_scores[model] + class_scores['ogvid']
