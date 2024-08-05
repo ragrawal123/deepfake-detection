@@ -14,7 +14,7 @@ def main():
     wav_dir = '/media/storage/yt_wav_files/'
 
     #Requires Hugging Face account & token due to being a gated dataset
-    #Grabbing xl training subset, aiming to download 3845 hours of YouTube data
+    #Grabbing xl training subset, aiming to download 1100 hours of YouTube data
     gigaspeech_train = load_dataset("speechcolab/gigaspeech", "xl", split="train", streaming=True, token="")
 
     #Debugging Purposes
