@@ -15,6 +15,10 @@ from eval_utils.isplutils import utils
 import time
 
 def main():
+    '''
+    Adapted from https://github.com/polimi-ispl/icpr2020dfdc/
+    Set up model and face detector
+    '''
     net_model = 'EfficientNetAutoAttB4ST'
     database = 'FFPP'
     device = torch.device('cuda:3') if torch.cuda.is_available() else torch.device('cpu')
@@ -35,33 +39,42 @@ def main():
     video_read_fn = lambda x: videoreader.read_frames(x, num_frames=frames_per_video) 
     face_extractor = FaceExtractor(video_read_fn=video_read_fn, facedet=facedet)
 
+    #Opening datasaving directory and root original video data
     ogdir = './data/ogdir/'
     if not os.path.exists(ogdir):
         os.makedirs(ogdir)
     rootdir = '/media/raunak/E380-1E91/Deepfake/End_To_End/og_may24/'
     checked_dict = dict()
+    
+    #Evaluating data
     i = 0
     for root, dirs, files in os.walk(rootdir):
         if len(dirs) == 0:
-            model = os.path.basename(os.path.dirname(root))
+            participant = os.path.basename(os.path.dirname(root))
             
-            if os.path.exists(f"{ogdir}{model}.txt"):
-                with open(f"{ogdir}{model}.txt") as file:
+            #Check if data for participant already written
+            #If so, load into a dictionary
+            if os.path.exists(f"{ogdir}{participant}.txt"):
+                with open(f"{ogdir}{participant}.txt") as file:
                     for line in file:
                         line.strip('\n')
                         id, data = line.split(':', 1)
                         checked_dict[id] = data
                     file.close()
 
-            model_file = open(f"{ogdir}{model}.txt", 'a')
+            participant_file = open(f"{ogdir}{participant}.txt", 'a')
             
+            #Walk through directory and evaluate .mp4 files
             for file in os.listdir(root):
                 if file.endswith('.mp4') and file.startswith("p"):
+                     #Check if mp4 file was already evaluated
                     path = f"{root}/{file}".split('/', 6)[6]
                     if path in checked_dict.keys():
-                        print(f'Already In File')
+                        print(f'{i}: {path}: Already In File')
+                        i += 1
                         continue
 
+                    #Get evaluation score
                     start_time = time.time()
                     score = eval(path=f"{root}/{file}", 
                                  model=eval_model, 
@@ -72,12 +85,14 @@ def main():
 
                     t_time = '{:.2f}'.format(end_time - start_time)
                     
-
-                    model_file.write(f"{path}:{score}:{t_time}\n")
+                    #Write to datasaving file
+                    participant_file.write(f"{path}:{score}:{t_time}\n")
                     print(f'{i}: Scored: {path}')
                     i += 1
-            model_file.close()
-
+            participant_file.close()
+    
+    #Remove miscallaneous data
+    os.remove(f"{ogdir}/iphone.txt")
 
 
 def eval(path, face_extractor, model, device, transf):

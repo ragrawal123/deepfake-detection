@@ -15,6 +15,10 @@ from eval_utils.isplutils import utils
 import time
 
 def main():
+    '''
+    Adapted from https://github.com/polimi-ispl/icpr2020dfdc/
+    Set up model and face detector
+    '''
     net_model = 'EfficientNetAutoAttB4ST'
     database = 'FFPP'
     device = torch.device('cuda:2') if torch.cuda.is_available() else torch.device('cpu')
@@ -35,16 +39,21 @@ def main():
     video_read_fn = lambda x: videoreader.read_frames(x, num_frames=frames_per_video) 
     face_extractor = FaceExtractor(video_read_fn=video_read_fn, facedet=facedet)
 
+    #Opening datasaving directory and root deepfake video data
     deepfakedir = './data/deepfakedir/'
     if not os.path.exists(deepfakedir):
         os.makedirs(deepfakedir)
     rootdir = '/media/raunak/E380-1E91/Deepfake/End_To_End/deepfakes_may24/'
     checked_dict = dict()
+    
+    #Evaluating data
     i = 0
     for root, dirs, files in os.walk(rootdir):
         if len(dirs) == 0:
             model = os.path.basename(os.path.dirname(root))
             
+            #Check if data for model already written
+            #If so, load into a dictionary
             if os.path.exists(f"{deepfakedir}{model}.txt"):
                 with open(f"{deepfakedir}{model}.txt") as file:
                     for line in file:
@@ -55,14 +64,17 @@ def main():
 
             model_file = open(f"{deepfakedir}{model}.txt", 'a')
             
+            #Walk through directory and evaluate .mp4 files
             for file in os.listdir(root):
                 if file.endswith('.mp4') and file.startswith("p"):
+                    #Check if mp4 file was already evaluated
                     path = f"{root}/{file}".split('/', 7)[7]
                     if path in checked_dict.keys():
                         print(f'{i}: {path}: Already in file')
                         i += 1
                         continue
 
+                    #Get evaluation score
                     start_time = time.time()
                     score = eval(path=f"{root}/{file}", 
                                  model=eval_model, 
@@ -73,7 +85,7 @@ def main():
 
                     t_time = '{:.2f}'.format(end_time - start_time)
                     
-
+                    #Write to datasaving file
                     model_file.write(f"{path}:{score}:{t_time}\n")
                     print(f'{i}: Scored: {path}')
                     i += 1
