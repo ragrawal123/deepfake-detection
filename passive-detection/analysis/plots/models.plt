@@ -25,11 +25,11 @@ set key maxrows 3
 set key width -1
 set key samplen 1
 
-out = "models_roc.pdf"
-set output out
+#out = "models_roc.pdf"
+#set output out
 
-#out2 = "models_roc.eps"
-#set output out2
+out2 = "models_roc.eps"
+set output out2
 
 #set label at 0,0.97 "" point pointtype 4 pointsize 0.5 lw 2 lc rgb RGBA("00ff4161", 0.7)
 #set label at 0,0.925 "" point pointtype 4 pointsize 0.5 lw 2 lc rgb RGBA("00ff4161", 0.7)

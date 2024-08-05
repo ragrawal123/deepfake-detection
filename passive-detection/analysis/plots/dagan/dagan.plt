@@ -25,9 +25,9 @@ set key maxrows 2
 set key width -4
 set key samplen 1
 
-out = "dagan_roc.pdf"
-#out2 = "dagan_roc.eps"
+out = "dagan_roc.eps"
 set output out
+#out2 = "dagan_roc.pdf"
 #set output out2
 
 plot "daganrates.csv" using 1:2 w l ls 1 title "EfficientNetAutoAttB4ST - Dagan (AUC 0.7142)"

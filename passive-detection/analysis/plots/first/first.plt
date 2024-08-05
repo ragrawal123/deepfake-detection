@@ -25,9 +25,9 @@ set key maxrows 2
 set key width -4
 set key samplen 1
 
-out = "first_roc.pdf"
-#out2 = "first_roc.eps"
-set output out
-#set output out2
+#out = "first_roc.pdf"
+out2 = "first_roc.eps"
+#set output out
+set output out2
 
 plot "firstrates.csv" using 1:2 w l ls 1 title "EfficientNetAutoAttB4ST - First (AUC 0.8136)

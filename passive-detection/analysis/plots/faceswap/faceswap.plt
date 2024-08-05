@@ -25,9 +25,9 @@ set key maxrows 2
 set key width -4
 set key samplen 1
 
-out = "faceswap_roc.pdf"
-#out2 = "faceswap_roc.eps"
-set output out
-#set output out2
+#out = "faceswap_roc.pdf"
+out2 = "faceswap_roc.eps"
+#set output out
+set output out2
 
 plot "faceswaprates.csv" using 1:2 w l ls 1 title "EfficientNetAutoAttB4ST - Faceswap (AUC 0.8957)"

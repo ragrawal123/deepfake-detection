@@ -25,9 +25,9 @@ set key maxrows 2
 set key width -4
 set key samplen 1
 
-out = "sadtalker_roc.pdf"
-#out2 = "sadtalker_roc.eps"
-set output out
-#set output out2
+#out = "sadtalker_roc.pdf"
+out2 = "sadtalker_roc.eps"
+#set output out
+set output out2
 
 plot "sadtalkerrates.csv" using 1:2 w l ls 1 title "EfficientNetAutoAttB4ST - Sadtalker (AUC 0.7206)

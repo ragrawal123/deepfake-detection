@@ -91,7 +91,7 @@ def roc_curve(original_vid_scores, df_vid_scores, model_name):
     fprs = fprs[fprs_order] #sort so integral has correct sign
     tprs = tprs[fprs_order]
 
-    csv_file = f"./plots/{model_name}rates.csv"
+    csv_file = f"./plots/{model_name}/{model_name}rates.csv"
     if os.path.exists(csv_file):
         os.remove(csv_file)
     
@@ -117,3 +117,8 @@ def get_metrics(ground_truths, predictions):
     recall = recall_score(ground_truths, predictions)
 
     return [accuracy, f1, precision, recall]
+
+
+'''
+Implement function to automatically create gnuplots
+'''

@@ -3,6 +3,7 @@ from collections import defaultdict
 import os
 
 def main():
+    models = ['dagan', 'faceswap', 'first', 'sadtalker', 'talklip']
     class_scores = defaultdict(list)
     auc_scores = defaultdict(list)
     class_scores, auc_scores = get_classification_scores(models=models, class_scores=class_scores, auc_scores=auc_scores)
@@ -18,15 +19,12 @@ def main():
     
     og_truths = [0 for i in range(len(class_scores['ogvid']))]
 
-    models = ['dagan', 'faceswap', 'first', 'sadtalker', 'talklip']
-    
     for model in models:
         truths = [1 for i in range(len(class_scores[model]))] + og_truths
         predictions = class_scores[model] + class_scores['ogvid']
         accuracy, f1, precision, recall = get_metrics(truths, predictions)
         auc = roc_curve(auc_scores['ogvid'], auc_scores[model], model)
         metrics.write(f'{model:s}:{accuracy:.2f}:{f1:.2f}:{precision:.1f}:{recall:.2f}:{auc:.4f}\n')  
-    
 
 def get_classification_scores(models, class_scores, auc_scores):
     scorepath = 'scores.txt'
