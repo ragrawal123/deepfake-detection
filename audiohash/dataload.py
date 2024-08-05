@@ -15,7 +15,7 @@ def main():
 
     #Requires Hugging Face account & token due to being a gated dataset
     #Grabbing xl training subset, aiming to download 3845 hours of YouTube data
-    gigaspeech_train = load_dataset("speechcolab/gigaspeech", "xl", split="train", streaming=True, token="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")
+    gigaspeech_train = load_dataset("speechcolab/gigaspeech", "xl", split="train", streaming=True, token="")
 
     #Debugging Purposes
     #gigaspeech_train = gigaspeech_train.take(10)
