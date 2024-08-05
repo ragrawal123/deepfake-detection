@@ -39,6 +39,7 @@ To evaluate the YouTube data, we wrote the script `wer_eval.py` using [faster-wh
   "#:Noise", meaning that the audio segment fell under the `gigaspeech_garbage_utterance_tags` and was skipped over in transcription
 
   "#:Checked", meaning the audio segment was already transcribed in a previous script run and was saved into a file and loaded into a dict during runtime for easy access to the prediction rather than re-transcribing
+
   "#:Error", there was either a loading or evaluating error with that particular file, which could be caused by an empty reference or json file
  
 - The WER metric % at the end of runtime
