@@ -30,7 +30,7 @@ In order to use the YouTube subset, we wrote the script `dataload.py` that would
 
 In order to download the data, we ran: 
 
-`<time> python dataload.py'
+`<time> python dataload.py`
 
 ## Evaluation
 To evaluate the YouTube data, we wrote the script `wer_eval.py` using [faster-whisper](https://github.com/SYSTRAN/faster-whisper), which outputs:
