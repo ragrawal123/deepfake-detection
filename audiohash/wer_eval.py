@@ -11,7 +11,7 @@ def main():
     json_dir = '/media/storage/data_entries/'
     wav_dir = '/media/storage/yt_wav_files/'
 
-    model_type = 'base.en'
+    model_type = 'medium.en'
 
     model = WhisperModel(model_type, device=device, compute_type="float16")
     wer = evaluate.load("wer")
